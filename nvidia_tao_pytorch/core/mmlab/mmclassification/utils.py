@@ -180,7 +180,17 @@ class MMPretrainConfig(object):
         self.updated_config["auto_scale_lr"] = {"base_batch_size": train_param_config["runner"]["auto_scale_lr_bs"]}
         self.updated_config["train_cfg"] = {"by_epoch": True, "max_epochs": train_param_config["runner"]["max_epochs"], "val_interval": train_param_config["evaluation"]["interval"]}
         self.updated_config["optim_wrapper"] = self.get_updated_optimizer(train_param_config)
-        self.updated_config["param_scheduler"] = [train_param_config["lr_config"]]
+        if "mit" in self.updated_config["model"]["backbone"]["type"]:
+            self.updated_config["param_scheduler"] = [{"type":'LinearLR', 
+                                                    "by_epoch": True, 
+                                                    "begin": 0,
+                                                    "end": 5, 
+                                                    "convert_to_iter_based": True,
+                                                    "start_factor": 1e-3}, 
+                                                    train_param_config["lr_config"]]
+
+        else:
+            self.updated_config["param_scheduler"] = [train_param_config["lr_config"]]
         self.updated_config["load_from"] = train_param_config["load_from"]
         self.updated_config["resume"] = train_param_config["resume"]
         self.updated_config["custom_hooks"] = train_param_config["custom_hooks"]

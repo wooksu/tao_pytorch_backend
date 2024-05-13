@@ -132,7 +132,9 @@ def instantiate_dev_docker(gpus, mount_file,
     gpu_string = get_docker_gpus_prefix(gpus)
 
     # Prefix for the run command.
-    run_command = "{} run -it --rm".format(DOCKER_COMMAND)
+    # 나중에는 --rm 추가해야함 현재만 잠시..
+    # run_command = "{} run -it --rm".format(DOCKER_COMMAND)
+    run_command = "{} run -it".format(DOCKER_COMMAND)
 
     # get default mount points.
     formatted_mounts = get_formatted_mounts(MOUNTS_PATH)

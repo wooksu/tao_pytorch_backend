@@ -76,7 +76,10 @@ def run_experiment(experiment_config, results_dir):
             train_cfg["resume"] = True
             train_cfg["model"]["backbone"]["init_cfg"] = None  # Disable pretrained weights if there are any
         train_cfg["work_dir"] = results_dir
-        runner = Runner.from_cfg(train_cfg)
+        if "mit" in train_cfg["model"]["backbone"]["type"]:
+            lr_updated = train_cfg["optim_wrapper"]["optimizer"]["lr"] * train_cfg["auto_scale_lr"]["base_batch_size"] / 512
+            train_cfg["optim_wrapper"]["optimizer"]["lr"] = lr_updated
+            runner = Runner.from_cfg(train_cfg)
         runner.train()
 
 

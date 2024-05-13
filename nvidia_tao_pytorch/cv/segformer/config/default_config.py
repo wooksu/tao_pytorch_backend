@@ -32,8 +32,8 @@ class TestModelConfig:
     """Configuration parameters for Inference."""
 
     mode: str = "whole"
-    # crop_size: Optional[List[int]] = None  # Configurable
-    # stride: Optional[List[int]] = None  # Configurable
+    crop_size: Optional[List[int]] = None  # Configurable
+    stride: Optional[List[int]] = None  # Configurable
 
 
 @dataclass
